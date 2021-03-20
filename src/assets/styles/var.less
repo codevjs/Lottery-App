@@ -1,0 +1,39 @@
+/*====================================
+=            FONT                    =
+====================================*/
+@font-face {
+  font-family: 'Montserrat-Regular';
+  src: url("../fonts/montserrat/Montserrat-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat-Bold';
+  src: url("../fonts/montserrat/Montserrat-Regular.ttf") format('truetype');
+}
+
+@font-family-regular : Montserrat-Regular, serif !important;
+@font-family-bold    : Montserrat-Bold, serif !important;
+
+body {
+  font-family: @font-family-regular, serif !important;
+}
+
+
+/*====================================
+=            BREAK POINTS            =
+====================================*/
+@wide-screen-down : ~'(max-width: 1235px)';
+@ipad-pro-down    : ~'(max-width: 1024px)';
+@desktop-down     : ~'(max-width: 990px)';
+@tablet-down      : ~'(max-width: 767px)';
+@phone-down       : ~'(max-width: 480px)';
+@small-phone-down : ~'(max-width: 320px)';
+/*====================================
+=            TEXT                    =
+====================================*/
+@color-text         : #6F6F6F;
+@size-text-h1       : 3rem;
+@size-text-h1-phone : 2.5rem;
+@size-text-h2       : 2rem;
+@size-text-h3       : 1.3rem;
+@size-text-p        : 1rem;

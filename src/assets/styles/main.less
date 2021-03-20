@@ -1,0 +1,65 @@
+@import "var";
+
+/*====================================
+=            GLOBAL                  =
+====================================*/
+html {
+  scroll-behavior: smooth;
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns {
+  padding: 0 20px 20px;
+  margin-top: 0;
+}
+
+/*====================================
+=            PUBLIC LAYOUT           =
+====================================*/
+.public-layout {
+  width: 100%;
+  min-height: 100vh;
+  background: #bdc3c7;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #ffffff, #2c3e50);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #ffffff, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+  /* PUBLIC CONTAINER ====================================*/
+  .public-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+
+  @media @wide-screen-down {
+    .public-container {
+      padding: 0 20px;
+    }
+  }
+  @media @ipad-pro-down {
+    .public-container {
+      padding: 0 20px;
+    }
+  }
+  @media @desktop-down {
+    .public-container {
+      padding: 0 20px;
+    }
+  }
+  @media @tablet-down {
+    .public-container {
+      padding: 0 20px;
+    }
+  }
+  @media @phone-down {
+    .public-container {
+      padding: 0 20px;
+    }
+  }
+  @media @small-phone-down {
+    .public-container {
+      padding: 0 20px;
+    }
+
+  }
+
+}

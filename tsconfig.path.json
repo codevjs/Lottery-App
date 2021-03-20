@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "paths" : {
+      "assets"     : ["./assets"],
+      "components" : ["./components"],
+      "context"    : ["./context"],
+      "interface"  : ["./interface"],
+      "modules"    : ["./modules"],
+      "router"     : ["./router"],
+      "services"   : ["./services"],
+      "hooks"      : ["./hooks"],
+      "utils"      : ["./utils"]
+    }
+  }
+}
