@@ -12,8 +12,6 @@ const View : React.FC = () => {
 
     useEffect(() => {
 
-        console.log("lol")
-
         if (isElectron()) {
             // @ts-ignore
             window.ipcRenderer.on("winners", (event, value) => {
@@ -21,16 +19,6 @@ const View : React.FC = () => {
                 setWinners(value.customers);
                 setDoorprize(value.doorprize);
             });
-        }
-
-        return () => {
-            if (isElectron()) {
-                // @ts-ignore
-                window.ipcRenderer.removeListener("winners", () => {
-
-                    console.log("Winners listener removed")
-                });
-            }
         }
     })
 

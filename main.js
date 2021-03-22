@@ -114,7 +114,7 @@ app.whenReady().then( async () => {
         try {
 
             let winners    = "[]";
-            let isChaeting = []
+            let isChaeting = [];
 
             if (fs.existsSync("./winners.json")) {
 
