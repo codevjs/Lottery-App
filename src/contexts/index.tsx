@@ -14,6 +14,7 @@ export interface ContextProps {
     isLot        : boolean,
     startLot     : () => void,
     stopLot      : () => void,
+    clearLot     : () => void,
     resetLot     : () => void,
     dataLot      : DataLot,
     beforeUpload : (file : RcFile) => boolean,
@@ -64,9 +65,9 @@ export const ContextProviver : React.FC = (props) => {
         setLot(false);
 
     }, []);
-    
-    const resetLot = useCallback(() => {
-        
+
+    const clearLot = useCallback(() => {
+
         setDataLot({
             doorprize  : "",
             numWinners : 0,
@@ -75,14 +76,40 @@ export const ContextProviver : React.FC = (props) => {
 
         if (isElectron()) {
             // @ts-ignore
-            window.ipcRenderer.send("reset" +
-                "-lot", {
+            window.ipcRenderer.send("clear-lot", {
                 doorprize  : "",
                 numWinners : 0,
                 customers  : []
             });
         }
+
+    }, []);
+
+    const resetLot = useCallback(() => {
         
+        setDataLot({
+            doorprize  : "",
+            numWinners : 0,
+            customers  : []
+        });
+
+        Modal.confirm({
+            title : <div style={{padding : "20px 20px 0"}}>Reset undian? <br/></div>,
+            okText : "Ya!",
+            cancelText : "Batal",
+            icon : null,
+            centered : true,
+            onOk : () => {
+                if (isElectron()) {
+                    // @ts-ignore
+                    window.ipcRenderer.send("reset-lot", {
+                        doorprize  : "",
+                        numWinners : 0,
+                        customers  : []
+                    });
+                }
+            }
+        })
     }, []);
 
     const beforeUpload = useCallback( (file : RcFile) : boolean => {
@@ -123,7 +150,7 @@ export const ContextProviver : React.FC = (props) => {
     }, []);
 
     return (
-        <Context.Provider value={{isLot, startLot, stopLot, resetLot, dataLot, beforeUpload, onFinish}}>
+        <Context.Provider value={{isLot, startLot, stopLot, clearLot, resetLot, dataLot, beforeUpload, onFinish}}>
             {props.children}
         </Context.Provider>
     )

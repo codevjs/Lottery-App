@@ -10,7 +10,7 @@ import logo from "../../assets/images/logo.png";
 
 const Home : React.FC = () => {
 
-    const {isLot, startLot, stopLot, dataLot, resetLot, beforeUpload, onFinish} = useContext(Context) as ContextProps;
+    const {isLot, startLot, stopLot, dataLot, clearLot, resetLot, beforeUpload, onFinish} = useContext(Context) as ContextProps;
 
     const [form] = Form.useForm();
 
@@ -80,7 +80,6 @@ const Home : React.FC = () => {
                                       <Space>
                                           <Button
                                               size={"large"}
-                                              style={{width: 150}}
                                               type={"primary"}
                                               disabled={isLot}
                                               htmlType={"submit"}
@@ -89,7 +88,6 @@ const Home : React.FC = () => {
                                           </Button>
                                           <Button
                                               size={"large"}
-                                              style={{width: 150}}
                                               type={"primary"}
                                               disabled={isLot}
                                               htmlType={"button"}
@@ -102,7 +100,18 @@ const Home : React.FC = () => {
                                           </Button>
                                           <Button
                                               size={"large"}
-                                              style={{width: 150}}
+                                              type={"primary"}
+                                              disabled={isLot}
+                                              htmlType={"button"}
+                                              onClick={() => {
+                                                  clearLot();
+                                                  form.resetFields();
+                                              }}
+                                          >
+                                              Bersihkan
+                                          </Button>
+                                          <Button
+                                              size={"large"}
                                               type={"primary"}
                                               htmlType={"button"}
                                               onClick={() => isLot ? stopLot() : startLot()}

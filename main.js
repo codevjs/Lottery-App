@@ -2,7 +2,8 @@ const path                            = require('path');
 const { app, BrowserWindow, ipcMain}  = require('electron');
 const {shuffle}                       = require("./utils");
 const url                             = require("url");
-const isDev                           = false;
+const fs                              = require("fs");
+const isDev                           = true;
 const URL                             = isDev ? "http://localhost:3000" : url.format({
     pathname: path.join(__dirname, 'build/index.html'),
     protocol: 'file:',
@@ -10,6 +11,22 @@ const URL                             = isDev ? "http://localhost:3000" : url.fo
 });
 
 let newWindow, handleInterval;
+
+Array.prototype.remove = function() {
+
+    let what, a = arguments, L = a.length, ax;
+
+    while (L && this.length) {
+
+        what = a[--L];
+
+        while ((ax = this.indexOf(what)) !== -1) {
+
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
 
 const windowConfig = {
     width: 1020,
@@ -60,10 +77,28 @@ app.whenReady().then( async () => {
 
     ipcMain.on("start-lot", (event, value) => {
 
+        let winners = "[]";
+
+        if (fs.existsSync("./winners.json")) {
+
+            winners = fs.readFileSync("./winners.json");
+        }
+
+        const jsonParse = JSON.parse(winners);
+
+        for(let i in jsonParse) {
+
+            if (!jsonParse.hasOwnProperty(i)) continue;
+
+            value.customers.remove(jsonParse[i]);
+        }
+
         handleInterval = setInterval(() => {
             try {
 
                 const result = [...shuffle(value.customers)].slice(0, (value.numWinners));
+
+                fs.writeFileSync("./winners.json", JSON.stringify(jsonParse.concat(result)));
 
                 newWindow?.webContents.send("winners", {...value, customers : result});
 
@@ -71,21 +106,33 @@ app.whenReady().then( async () => {
 
             }
         }, 100);
+
     });
 
     ipcMain.on("stop-lot", () => {
 
         clearInterval(handleInterval);
-    })
+    });
 
-    ipcMain.on("reset-lot", (event, value) => {
+    ipcMain.on("clear-lot", (event, value) => {
         try {
 
             newWindow?.webContents.send("winners", {...value});
         } catch (e) {
 
         }
-    })
+    });
+
+    ipcMain.on("reset-lot", (event, value) => {
+        try {
+
+            fs.unlinkSync("./winners.json");
+
+            newWindow?.webContents.send("winners", {...value});
+        } catch (e) {
+
+        }
+    });
 
     // when app activate
     app.on('activate', () => {
