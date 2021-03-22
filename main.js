@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain}  = require('electron');
 const {shuffle}                       = require("./utils");
 const url                             = require("url");
 const fs                              = require("fs");
-const isDev                           = true;
+const isDev                           = false;
 const URL                             = isDev ? "http://localhost:3000" : url.format({
     pathname: path.join(__dirname, 'build/index.html'),
     protocol: 'file:',
