@@ -59,12 +59,12 @@ export const ContextProviver : React.FC = (props) => {
 
         if (isElectron()) {
             // @ts-ignore
-            window.ipcRenderer.send("stop-lot");
+            window.ipcRenderer.send("stop-lot", {...dataLot});
         }
 
         setLot(false);
 
-    }, []);
+    }, [dataLot]);
 
     const clearLot = useCallback(() => {
 
@@ -93,23 +93,14 @@ export const ContextProviver : React.FC = (props) => {
             customers  : []
         });
 
-        Modal.confirm({
-            title : <div style={{padding : "20px 20px 0"}}>Reset undian? <br/></div>,
-            okText : "Ya!",
-            cancelText : "Batal",
-            icon : null,
-            centered : true,
-            onOk : () => {
-                if (isElectron()) {
-                    // @ts-ignore
-                    window.ipcRenderer.send("reset-lot", {
-                        doorprize  : "",
-                        numWinners : 0,
-                        customers  : []
-                    });
-                }
-            }
-        })
+        if (isElectron()) {
+            // @ts-ignore
+            window.ipcRenderer.send("reset-lot", {
+                doorprize  : "",
+                numWinners : 0,
+                customers  : []
+            });
+        }
     }, []);
 
     const beforeUpload = useCallback( (file : RcFile) : boolean => {

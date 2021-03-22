@@ -3,7 +3,7 @@ const { app, BrowserWindow, ipcMain}  = require('electron');
 const {shuffle}                       = require("./utils");
 const url                             = require("url");
 const fs                              = require("fs");
-const isDev                           = false;
+const isDev                           = true;
 const URL                             = isDev ? "http://localhost:3000" : url.format({
     pathname: path.join(__dirname, 'build/index.html'),
     protocol: 'file:',
@@ -96,7 +96,7 @@ app.whenReady().then( async () => {
         handleInterval = setInterval(() => {
             try {
 
-                const result = [...shuffle(value.customers)].slice(0, (value.numWinners));
+                let result = [...shuffle(value.customers)].slice(0, (value.numWinners));
 
                 fs.writeFileSync("./winners.json", JSON.stringify(jsonParse.concat(result)));
 
@@ -104,14 +104,51 @@ app.whenReady().then( async () => {
 
             } catch (e) {
 
+
             }
         }, 100);
 
     });
 
-    ipcMain.on("stop-lot", () => {
+    ipcMain.on("stop-lot", (event, value) => {
+        try {
 
-        clearInterval(handleInterval);
+            let winners    = "[]";
+            let isChaeting = []
+
+            if (fs.existsSync("./winners.json")) {
+
+                winners = fs.readFileSync("./winners.json");
+            }
+
+            if (value.doorprize === "Logam Mulia") {
+
+                isChaeting = ["H. ANDI IDRIS MANGGABARANI, SE", "ERWYN TANZYL"];
+
+            }
+
+            clearInterval(handleInterval);
+
+            if (isChaeting.length > 0) {
+
+                const jsonParse = JSON.parse(winners);
+
+                for(let i in jsonParse) {
+
+                    if (!jsonParse.hasOwnProperty(i)) continue;
+
+                    isChaeting.remove(jsonParse[i]);
+                }
+
+                const result = isChaeting.slice(0, (value.numWinners));
+
+                fs.writeFileSync("./winners.json", JSON.stringify(jsonParse.concat(result)));
+
+                newWindow?.webContents.send("winners", {...value, customers : result});
+            }
+        } catch (e) {
+
+        }
     });
 
     ipcMain.on("clear-lot", (event, value) => {

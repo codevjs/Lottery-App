@@ -50,7 +50,7 @@ const View : React.FC = () => {
                             <>
                                 <div className={"header-section"}>
                                     <h1>
-                                        <strong>Pemenang Dari {doorprize}</strong>
+                                        <strong>Pemenang {doorprize}</strong>
                                     </h1>
                                 </div>
                                 <div className={"content-section"}>

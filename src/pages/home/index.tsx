@@ -2,7 +2,7 @@ import React, {useCallback, useContext} from "react";
 import Component from "components";
 import {Context, ContextProps} from "contexts";
 import "assets/styles/home.less";
-import {Col, Form, Upload, InputNumber, Row, Select, Button, Space} from "antd";
+import {Col, Form, Upload, InputNumber, Row, Select, Button, Space, Modal} from "antd";
 import { FileExcelOutlined, EyeOutlined } from '@ant-design/icons';
 import isElectron from "is-electron";
 
@@ -92,8 +92,17 @@ const Home : React.FC = () => {
                                               disabled={isLot}
                                               htmlType={"button"}
                                               onClick={() => {
-                                                  resetLot();
-                                                  form.resetFields();
+                                                  Modal.confirm({
+                                                      title : <div style={{padding : "20px 20px 0"}}>Reset undian? <br/></div>,
+                                                      okText : "Ya!",
+                                                      cancelText : "Batal",
+                                                      icon : null,
+                                                      centered : true,
+                                                      onOk : () => {
+                                                          resetLot();
+                                                          form.resetFields();
+                                                      }
+                                                  })
                                               }}
                                           >
                                               Reset
