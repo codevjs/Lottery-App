@@ -4,6 +4,10 @@
 =               HOME                 =
 ====================================*/
 .view-main {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  flex-direction: column; 
   text-align: center;
 
   .image-section {
@@ -14,23 +18,38 @@
     }
   }
 
-  .header-section {
-    h1 {
-      font-size: 2em;
+  .card {
+    box-shadow: 0 0.375rem 1.5rem 0 rgb(140 152 164 / 13%);
+    border-radius: 10px;
+    background-color: white;
+    border : 1px solid #efefef;
 
-      strong {
+    .header-section {
+      padding: 16px;
+      
+      h1 {
+        font-size: 2em;
+        margin-bottom: 0;
+        b {
+          font-weight: 900;
+        }
+      }
 
-        font-weight: 900;
+      border-bottom: 1px solid #efefef;
+    }
+  
+    .content-section {
+      padding: 16px;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      h2 {
+        font-size: 1.8em;
+        opacity: 60%;
       }
     }
   }
 
-  .content-section {
-
-    h2 {
-      font-size: 1.8em;
-      margin-top: 50px;
-    }
-  }
 
 }
